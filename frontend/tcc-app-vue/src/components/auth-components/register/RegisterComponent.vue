@@ -1,26 +1,25 @@
 <template>
   <div class="container-fluid">
-    <h1 class="text-center mt-5 mb-4">Hostel Caminho do Sol</h1>
+    <h1 class="text-center mt-3 mb-4">Hostel Caminho do Sol</h1>
     <h2 class="text-center">Cadastre-se agora!</h2>
     <div class="row">
       <div class="col-md-8 offset-md-2 col-sm-10 offset-sm-1">
         <form
-          style="margin-top: 20px; height: auto; padding-top: 25px !important"
+          class="form"
           v-on:submit.prevent="registerSubmitUserForm()"
         >
-          <div class="form-group mb-5 border border-info p-5 bg-light">
+          <div class="form-group mb-3 pb-4 pt-4 border border-info p-4 bg-light">
             <h4>Dados de Acesso</h4>
             <div class="row mt-4">
               <div class="col-md-6 col-sm-12 mb-4">
                 <!-- E-mail Block Start -->
                 <div class="input-group">
-                  <label for="email" class="w-100">
-                    E-mail
-                    <input
+                    <MazInput
                       type="email"
-                      class="form-control"
-                      placeholder="Digite seu E-mail"
+                      class="w-100"
+                      placeholder="E-mail"
                       v-model="registerForm.email"
+                      left-icon-name="email"
                       :class="{
                           'is-invalid': isSubmitted && $v.registerForm.email.$error,
                       }"
@@ -36,19 +35,17 @@
                         E-mail inválido!
                       </span>
                     </div>
-                  </label>
                 </div>
                 <!-- E-mail Block End -->
               </div>
               <div class="col-md-6 col-sm-12">
                 <!-- Password Block Start -->
-                <label for="password" class="w-100">
-                  Senha
-                  <input
-                    type="password"
-                    class="form-control"
-                    placeholder="Digite sua Senha"
+                  <MazInput
                     v-model="registerForm.password"
+                    placeholder="Senha"
+                    type="password"
+                    class="w-100"
+                    left-icon-name="lock"
                     :class="{
                         'is-invalid': isSubmitted && $v.registerForm.password.$error,
                     }"
@@ -64,23 +61,20 @@
                       A senha deve conter pelo menos 6 caracteres!
                     </span>
                   </div>
-                </label>
                 <!-- Password Block End -->
               </div>
             </div>
           </div>
-          <div class="form-group mb-5 border border-info p-5 bg-light">
+          <div class="form-group mb-5 pb-4 pt-4 border border-info p-4 bg-light">
             <h4>Dados de Cadastro</h4>
             <div class="row mt-4">
               <div class="col-md-12 col-sm-12 mb-4">
                 <!-- Name Block Start -->
-                <label for="name" class="w-100">
-                  Nome Completo
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Digite seu Nome Completo"
+                  <MazInput
                     v-model="registerForm.name"
+                    placeholder="Nome Completo"
+                    type="text"
+                    class="w-100"
                     :class="{
                         'is-invalid': isSubmitted && $v.registerForm.name.$error,
                     }"
@@ -89,20 +83,18 @@
                     v-if="isSubmitted && !$v.registerForm.name.required"
                     class="invalid-feedback!"
                   >
-                    O campo nome completo é obrigatório!
+                    <span>O campo nome completo é obrigatório!</span>
                   </div>
-                </label>
                 <!-- Name Block End -->
               </div>
               <div class="col-md-6 col-sm-12 mb-4">
                 <!-- Sex Block Start -->
-                <label for="sex" class="w-100">
-                  Sexo
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Informe seu Sexo"
+                  <MazSelect
                     v-model="registerForm.sex"
+                    placeholder="Sexo"
+                    type="text"
+                    class="w-100"
+                    :options="options"
                     :class="{
                         'is-invalid': isSubmitted && $v.registerForm.sex.$error,
                     }"
@@ -111,20 +103,20 @@
                     v-if="isSubmitted && !$v.registerForm.sex.required"
                     class="invalid-feedback!"
                   >
-                    O campo sexo é obrigatório!
+                    <span>O campo sexo é obrigatório!</span>
                   </div>
-                </label>
                 <!-- Sex Block End -->
               </div>
               <div class="col-md-6 col-sm-12 mb-4">
                 <!-- BirthDate Block Start -->
-                <label for="birthDate" class="w-100">
-                  Data de Nascimento
-                  <input
-                    type="date"
-                    class="form-control"
-                    placeholder="Informe a Data de Nascimento"
+                  <MazPicker
                     v-model="registerForm.birthDate"
+                    placeholder="Data de Nascimento"
+                    class="w-100"
+                    formatted="L"
+                    @formatted="pickerFormatted2 = $event"
+                    no-time
+                    noNow
                     :class="{
                         'is-invalid': isSubmitted && $v.registerForm.birthDate.$error,
                     }"
@@ -133,20 +125,25 @@
                     v-if="isSubmitted && !$v.registerForm.birthDate.required"
                     class="invalid-feedback!"
                   >
-                    O campo data de nascimento é obrigatório!
+                    <span>O campo data de nascimento é obrigatório!</span>
                   </div>
-                </label>
                 <!-- BirthDate Block End -->
               </div>
               <div class="col-md-6 col-sm-12 mb-4">
                 <!-- Phone Block Start -->
-                <label for="phone" class="w-100">
-                  Telefone
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Informe seu Telefone"
+                  <MazPhoneNumberInput
                     v-model="registerForm.phone"
+                    placeholder="Telefone"
+                    class="w-100"
+                    noValidation
+                    no-flags
+                    @update="resultsExample = $event"
+                    :translations="{
+                      countrySelectorLabel: 'Código do país',
+                      countrySelectorError: 'Escolha um país',
+                      phoneNumberLabel: 'Número de telefone',
+                      example: 'Exemplo :'
+                    }"
                     :class="{
                         'is-invalid': isSubmitted && $v.registerForm.phone.$error,
                     }"
@@ -155,20 +152,17 @@
                     v-if="isSubmitted && !$v.registerForm.phone.required"
                     class="invalid-feedback!"
                   >
-                    O campo telefone é obrigatório!
+                    <span>O campo telefone é obrigatório!</span>
                   </div>
-                </label>
                 <!-- Phone Block End -->
               </div>
               <div class="col-md-6 col-sm-12 mb-4">
                 <!-- City Block Start -->
-                <label for="city" class="w-100">
-                  Cidade
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Informe sua Cidade"
+                  <MazInput
                     v-model="registerForm.city"
+                    placeholder="Cidade"
+                    type="text"
+                    class="w-100"
                     :class="{
                         'is-invalid': isSubmitted && $v.registerForm.city.$error,
                     }"
@@ -177,20 +171,17 @@
                     v-if="isSubmitted && !$v.registerForm.city.required"
                     class="invalid-feedback!"
                   >
-                    O campo cidade é obrigatório!
+                    <span>O campo cidade é obrigatório!</span>
                   </div>
-                </label>
                 <!-- City Block End -->
               </div>
               <div class="col-md-6 col-sm-12 mb-4">
                 <!-- State Block Start -->
-                <label for="state" class="w-100">
-                  Estado
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Informe seu Estado"
+                  <MazInput
                     v-model="registerForm.state"
+                    placeholder="Estado"
+                    type="text"
+                    class="w-100"
                     :class="{
                         'is-invalid': isSubmitted && $v.registerForm.state.$error,
                     }"
@@ -199,20 +190,17 @@
                     v-if="isSubmitted && !$v.registerForm.state.required"
                     class="invalid-feedback!"
                   >
-                    O campo estado é obrigatório!
+                    <span>O campo estado é obrigatório!</span>
                   </div>
-                </label>
                 <!-- State Block End -->
               </div>
               <div class="col-md-6 col-sm-12">
                 <!-- Country Block Start -->
-                <label for="country" class="w-100">
-                  País
-                  <input
-                    type="text"
-                    class="form-control"
-                    placeholder="Informe seu País"
+                  <MazInput
                     v-model="registerForm.country"
+                    placeholder="País"
+                    type="text"
+                    class="w-100"
                     :class="{
                       'is-invalid': isSubmitted && $v.registerForm.country.$error,
                     }"
@@ -221,27 +209,9 @@
                     v-if="isSubmitted && !$v.registerForm.country.required"
                     class="invalid-feedback!"
                   >
-                    O campo país é obrigatório!
+                    <span>O campo país é obrigatório!</span>
                   </div>
-                </label>
                 <!-- Country Block End -->
-                <!-- Phone Block Start -->
-                <!--
-                  <MazPhoneNumberInput
-                    v-model="registerForm.phone"
-                    @update="results = $event"
-                    :class="{
-                        'is-invalid': isSubmitted && $v.registerForm.phone.$error,
-                    }"
-                  />
-                  <div
-                    v-if="isSubmitted && !$v.registerForm.phone.required"
-                    class="invalid-feedback!"
-                  >
-                    O campo telefone é obrigatório!
-                  </div>
-                -->
-                <!-- Phone Block End -->
               </div>
             </div>
           </div>
@@ -269,4 +239,15 @@
 
 <script src="./Register.js"></script>
 
-<style src="" scoped></style>
+<style src="" scoped>
+span {
+  color: red;
+  font-weight: bold;
+  margin-left: 15px;
+}
+form {
+ margin-top: 20px;
+ height: auto;
+ padding-top: 25px !important;
+}
+</style>

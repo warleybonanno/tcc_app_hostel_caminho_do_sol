@@ -1,6 +1,8 @@
 import Vue from 'vue';
 import Vuelidate from 'vuelidate';
-import { MazPhoneNumberInput, MazInput } from 'maz-ui';
+import {
+  MazPhoneNumberInput, MazInput, MazSelect, MazPicker,
+} from 'maz-ui';
 import App from './App.vue';
 import router from './router';
 
@@ -9,6 +11,8 @@ import 'nprogress/nprogress.css';
 
 Vue.use(MazPhoneNumberInput);
 Vue.use(MazInput);
+Vue.use(MazSelect);
+Vue.use(MazPicker);
 Vue.use(Vuelidate);
 
 Vue.config.productionTip = false;

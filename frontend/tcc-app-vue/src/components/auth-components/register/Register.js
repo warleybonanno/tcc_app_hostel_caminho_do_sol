@@ -8,9 +8,20 @@
 import swal from 'sweetalert';
 import { minLength, required, email } from 'vuelidate/lib/validators';
 import RegisterService from '@/services/RegisterService';
+import {
+  MazPhoneNumberInput, MazInput, MazSelect, MazPicker,
+} from 'maz-ui';
 
 export default {
   name: 'RegisterComponent',
+
+  components: {
+    MazPhoneNumberInput,
+    MazInput,
+    MazSelect,
+    MazPicker,
+  },
+
   data() {
     return {
       registerForm: {
@@ -23,7 +34,14 @@ export default {
         city: null,
         state: null,
         country: null,
+        pickerFormatted2: null,
       },
+      options: [
+        { label: 'None', value: null },
+        { label: 'Feminino', value: 'Feminino' },
+        { label: 'Masculino', value: 'Masculino' },
+        { label: 'Prefiro não responder', value: 'Prefiro não responder' },
+      ],
       isSubmitted: false,
     };
   },
