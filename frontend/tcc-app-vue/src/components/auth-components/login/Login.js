@@ -6,8 +6,9 @@
  */
 
 import swal from 'sweetalert';
-import { required } from 'vuelidate/lib/validators';
+import { required, email, minLength } from 'vuelidate/lib/validators';
 import LoginService from '@/services/LoginService';
+import { MazInput } from 'maz-ui';
 
 export default {
   name: 'LoginComponent',
@@ -21,10 +22,12 @@ export default {
     };
   },
 
+  components: { MazInput },
+
   validations: {
     loginForm: {
-      email: { required },
-      password: { required },
+      email: { required, email },
+      password: { required, minLength: minLength(6) },
     },
   },
 
@@ -51,7 +54,7 @@ export default {
       } catch (error) {
         swal({
           title: 'Oops!',
-          text: 'Alguma coisa deu errado aqui!',
+          text: 'E-mail ou senha inválida',
           icon: 'error',
         });
       }

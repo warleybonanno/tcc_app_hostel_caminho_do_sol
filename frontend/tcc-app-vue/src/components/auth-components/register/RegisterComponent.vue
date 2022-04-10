@@ -1,13 +1,12 @@
 <template>
   <div class="container-fluid">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.4.0/css/font-awesome.min.css">
     <h1 class="text-center mt-5 mb-4">Hostel Caminho do Sol</h1>
     <h2 class="text-center">Cadastre-se agora!</h2>
     <div class="row">
       <div class="col-md-8 offset-md-2 col-sm-10 offset-sm-1">
         <form
           style="margin-top: 20px; height: auto; padding-top: 25px !important"
-          v-on:submit.prevent="loginSubmitUserForm()"
+          v-on:submit.prevent="registerSubmitUserForm()"
         >
           <div class="form-group mb-5 border border-info p-5 bg-light">
             <h4>Dados de Acesso</h4>
@@ -227,6 +226,7 @@
                 </label>
                 <!-- Country Block End -->
                 <!-- Phone Block Start -->
+                <!--
                   <MazPhoneNumberInput
                     v-model="registerForm.phone"
                     @update="results = $event"
@@ -240,7 +240,7 @@
                   >
                     O campo telefone é obrigatório!
                   </div>
-
+                -->
                 <!-- Phone Block End -->
               </div>
             </div>

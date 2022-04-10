@@ -5,7 +5,6 @@
  * author: Warley Costa Bonanno Carvalho
  */
 
-const { response } = require('../app');
 const User = require('../models/user.model');
 
 // ==> Async and Await
@@ -13,7 +12,7 @@ const User = require('../models/user.model');
 // ==> 
 exports.registerNewUser = async (req, res) => {
   try {
-    let isUser = await User.find({ email: req.body.email });
+    const isUser = await User.find({ email: req.body.email });
     console.log(isUser);
 
     if(isUser.length >= 1) {
@@ -23,16 +22,16 @@ exports.registerNewUser = async (req, res) => {
     const newUser = new User(req.body);
     const user = await newUser.save();
     const token = await newUser.generateAuthToken();
-    res.status(201).json({ message: 'Usuário criado com sucesso!', user, token});
+    return res.status(201).json({ message: 'Usuário criado com sucesso!', user, token});
   } catch (error) {
-    res.status(400).json({ err: err});
+    res.status(400).json({ err });
   }
 }
 
 exports.loginUser = async (req, res) => {
   try {
-    const email = req.body.email;
-    const password = req.body.password;
+    const { email } = req.body;
+    const { password } = req.body;
     const user = await User.findByCredentials(email, password);
 
     if(!user) {
@@ -40,10 +39,10 @@ exports.loginUser = async (req, res) => {
     }
 
     const token = await user.generateAuthToken();
-    res.status(200).json ({ message: 'Usuário(a) logado com sucesso!', user, token});
+    return res.status(201).json ({ message: 'Usuário(a) logado com sucesso!', user, token});
 
   } catch (err) {
-    res.status(400).json({ err: err });
+    res.status(400).json({ err });
   }
 };
 
