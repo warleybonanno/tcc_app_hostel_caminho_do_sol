@@ -1,3 +1,10 @@
+/**
+ * file: src/components/auth-components/login/Login.css
+ * description: File responsible for styling the component 'LoginComponent.vue'
+ * data: 10/04/2022
+ * author: Warley Costa Bonanno Carvalho
+ */
+
 span {
     color: red;
     font-weight: bold;
