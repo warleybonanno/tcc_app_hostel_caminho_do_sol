@@ -89,15 +89,4 @@
 
 <script src="./Login.js"></script>
 
-<style src="" scoped>
-span {
-  color: red;
-  font-weight: bold;
-  margin-left: 15px;
-}
-.form {
-  margin-top: 20px;
-  height: auto;
-  padding-top: 25px !important;
-}
-</style>
+<style src="./Login.css" scoped></style>
