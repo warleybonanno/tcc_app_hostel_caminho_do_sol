@@ -21,9 +21,17 @@ const itinerarySchema = new Schema({
   endTimeActivities: { type: Date, required: true},
   museumInterest: { type: Number, required: true},
   beachInterest: { type: Number, required: true},
+  adventureInterest: { type: Number, required: true},
   foodInterest: { type: Number, required: true},
   purchaseInterest: { type: Number, required: true},
+  touristAttractionsInterest: { type: Number, required: true},
+  belongingTo: [{ type: Schema.Types.ObjectId, ref: 'users'}],
 }, {
   timestamps: true,
   collection: 'itinerary',
 });
+
+const Itinerary = mongoose.model('Itinerary', itinerarySchema);
+
+//Exporting the Itinerary module so that it can be imported elsewhere in the system
+module.exports = Itinerary;

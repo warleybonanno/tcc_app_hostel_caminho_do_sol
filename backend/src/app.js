@@ -14,6 +14,7 @@ const mongooseConnection = require('./config/mongooseConnection.config');
 // ==> API Routes
 const index = require('./routes/index');
 const userRoutes = require('./routes/user.routes');
+const itineraryRoutes = require('./routes/itinerary.routes');
 
 const app = express();
 
@@ -26,6 +27,7 @@ app.use(morgan('dev'));
 app.set('mongoose connection', mongooseConnection);
 
 app.use(index);
-app.use('/api/v1', userRoutes);
+app.use('/api/v1', userRoutes, itineraryRoutes);
+
 
 module.exports = app;

@@ -49,3 +49,8 @@ exports.loginUser = async (req, res) => {
 exports.returnUserProfile = async (req, res) => {
   await res.json(req.userData);
 };
+
+exports.returnUserID = async (req, res) => {
+  await res.json(req.userId);
+};
+

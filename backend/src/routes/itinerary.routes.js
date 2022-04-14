@@ -5,11 +5,14 @@
  * author: Warley Costa Bonanno Carvalho
  */
 
- const express = require('express');
- const router = express.Router();
+const express = require('express');
+const router = express.Router();
+const itineraryController = require ('../controllers/itinerary.controllers');
+const auth = require('../middlewares/auth');
+
  
- // ==> Route responsible for creating a new 'Itinerary': (POST) localhost:3000/api/v1/itineraryregister
- router.post('/register', userController.registerNewUser);
+ // ==> Route responsible for creating a new 'Itinerary': (POST) localhost:3000/api/v1/registerItinerary
+ router.post('/registerItinerary', auth, itineraryController.registerNewItinerary);
  
  module.exports = router;
  

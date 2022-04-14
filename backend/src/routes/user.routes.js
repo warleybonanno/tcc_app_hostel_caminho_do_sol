@@ -19,4 +19,7 @@ router.post('/login', userController.loginUser);
 // ==> Route responsible for returning the user profile: (GET) localhost:3000/api/v1/userProfile
 router.get('/userProfile', auth, userController.returnUserProfile);
 
+// ==> Route responsible for returning the user ID: (GET) localhost:3000/api/v1/userProfile
+router.get('/userId', auth, userController.returnUserID);
+
 module.exports = router;
