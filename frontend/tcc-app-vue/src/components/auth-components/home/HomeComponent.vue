@@ -34,6 +34,9 @@
               <li class="list-group-item">
                 E-mail: {{ user.email }}
               </li>
+              <li class="list-group-item">
+                ID Usuário: {{ user._id }}
+              </li>
             </ul>
           </div>
         </div>

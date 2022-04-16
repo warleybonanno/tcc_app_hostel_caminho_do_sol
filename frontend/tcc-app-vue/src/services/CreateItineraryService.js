@@ -1,7 +1,7 @@
 /**
- * file: src/services/RegisterService.js
+ * file: src/services/CreateItineraryService.js
  * description: File responsible for API request methods via HTTP
- * data: 06/04/2022
+ * data: 15/04/2022
  * author: Warley Costa Bonanno Carvalho
  */
 
@@ -10,12 +10,12 @@ import Api from './Api';
 
 export default {
   /**
-   * Method responsible for login a User (new Login User)
-   * (POST): localhost:3000/api/v1/
+   * Method responsible for creating a new Itinerary (new Itinerary)
+   * (POST): localhost:3000/api/v1/createItinerary
    */
-  async loginUser(user) {
+  async registerNewItinerary(newItinerary, user) {
     try {
-      const response = await Api().post('/login', user);
+      const response = await Api().post('/createItinerary', newItinerary, user);
       const { token } = response.data;
 
       localStorage.setItem('jwt', token);
@@ -23,17 +23,16 @@ export default {
       if (token) {
         swal({
           title: 'Excelente!',
-          text: 'Usuário logado com sucesso!',
+          text: 'Itinerário cadastrado com sucesso!',
           icon: 'success',
         });
       }
     } catch (error) {
       swal({
         title: 'Oops!',
-        text: 'Erro ao logar no sistema!',
+        text: 'Não foi possível cadastrar itinerário!',
         icon: 'error',
       });
-      this.$router.push('/');
     }
   },
 };

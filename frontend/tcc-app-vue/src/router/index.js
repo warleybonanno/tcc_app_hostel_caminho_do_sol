@@ -23,6 +23,14 @@ const routes = [
     name: 'register',
     component: () => import('../components/auth-components/register/RegisterComponent.vue'),
   },
+  {
+    path: '/createItinerary',
+    name: 'createItinerary',
+    component: () => import('../components/itinerary-components/CreateItinerary/CreateItineraryComponent.vue'),
+    meta: {
+      requireAuth: true,
+    },
+  },
 ];
 
 const router = new VueRouter({
