@@ -50,7 +50,7 @@ export default {
         }
 
         await LoginService.loginUser(this.loginForm);
-        this.$router.push('/createItinerary');
+        this.$router.push('/home');
       } catch (error) {
         swal({
           title: 'Oops!',

@@ -13,12 +13,16 @@ export default {
    * Method responsible for creating a new Itinerary (new Itinerary)
    * (POST): localhost:3000/api/v1/createItinerary
    */
-  async registerNewItinerary(newItinerary, user) {
+  async registerNewItinerary(userId, newItinerary) {
+    console.log(newItinerary);
+    console.log(userId);
+    console.log(localStorage);
     try {
-      const response = await Api().post('/createItinerary', newItinerary, user);
-      const { token } = response.data;
+      const formData = await this.saveItineraryData(newItinerary, userId);
+      console.log(formData);
+      const response = await Api().post('/registerItinerary', formData);
 
-      localStorage.setItem('jwt', token);
+      const token = localStorage.getItem('jwt');
 
       if (token) {
         swal({
@@ -35,4 +39,13 @@ export default {
       });
     }
   },
+
+  async saveItineraryData(formData, userId) {
+    const concatData = {
+      ...formData,
+      belongingTo: userId,
+    };
+    return concatData;
+  },
+
 };

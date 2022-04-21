@@ -20,6 +20,7 @@ export default {
       const token = localStorage.getItem('jwt');
       const tokenDecoded = VueJwtDecode.decode(token);
       this.user = tokenDecoded;
+      return this.user;
     },
     logOutUser() {
       localStorage.removeItem('jwt');

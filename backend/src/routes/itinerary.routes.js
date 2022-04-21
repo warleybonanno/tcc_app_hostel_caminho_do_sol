@@ -12,7 +12,7 @@ const auth = require('../middlewares/auth');
 
  
  // ==> Route responsible for creating a new 'Itinerary': (POST) localhost:3000/api/v1/registerItinerary
- router.post('/registerItinerary', auth, itineraryController.registerNewItinerary);
+ router.post('/registerItinerary', itineraryController.registerNewItinerary);
  
  module.exports = router;
  

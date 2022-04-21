@@ -11,6 +11,7 @@ import CreateItineraryService from '@/services/CreateItineraryService';
 import {
   MazInput, MazSelect, MazPicker, MazSlider,
 } from 'maz-ui';
+import VueJwtDecode from 'vue-jwt-decode';
 
 export default {
   name: 'CreateItineraryComponent',
@@ -73,7 +74,8 @@ export default {
           return;
         }
 
-        await CreateItineraryService.registerNewItinerary(this.createItineraryForm);
+        const userId = localStorage.getItem('userId');
+        await CreateItineraryService.registerNewItinerary(userId, this.createItineraryForm);
       } catch (error) {
         swal({
           title: 'Oops!',

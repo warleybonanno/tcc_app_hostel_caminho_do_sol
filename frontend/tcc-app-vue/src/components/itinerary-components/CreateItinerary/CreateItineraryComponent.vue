@@ -187,6 +187,7 @@
                     v-model="createItineraryForm.museumInterest"
                     type="number"
                     class="w-100"
+                    max= 3
                   />
                 <!-- museumInterest Block End -->
               </div>
@@ -196,6 +197,7 @@
                   <MazSlider
                     v-model="createItineraryForm.beachInterest"
                     class="w-100"
+                    max= 3
                   />
                 <!-- beachInterest Block End -->
               </div>
@@ -205,6 +207,7 @@
                   <MazSlider
                     v-model="createItineraryForm.adventureInterest"
                     class="w-100"
+                    max= 3
                   />
                 <!-- adventureInterest Block End -->
               </div>
@@ -214,6 +217,7 @@
                   <MazSlider
                     v-model="createItineraryForm.foodInterest"
                     class="w-100"
+                    max= 3
                   />
                 <!-- foodInterest Block End -->
               </div>
@@ -223,6 +227,7 @@
                   <MazSlider
                     v-model="createItineraryForm.purchaseInterest"
                     class="w-100"
+                    max= 3
                   />
                 <!-- purchaseInterest Block End -->
               </div>
@@ -232,6 +237,7 @@
                   <MazSlider
                     v-model="createItineraryForm.touristAttractionsInterest"
                     class="w-100"
+                    max= 3
                   />
                 <!-- touristAttractionsInterest Block End -->
               </div>

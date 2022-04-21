@@ -17,8 +17,10 @@ export default {
     try {
       const response = await Api().post('/login', user);
       const { token } = response.data;
+      const { _id } = response.data.user;
 
       localStorage.setItem('jwt', token);
+      localStorage.setItem('userId', _id);
 
       if (token) {
         swal({
