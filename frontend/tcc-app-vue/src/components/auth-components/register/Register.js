@@ -49,7 +49,10 @@ export default {
   validations: {
     registerForm: {
       email: { required, email },
-      password: { required, minLength: minLength(6) },
+      password: {
+        required,
+        minLength: minLength(6),
+      },
       name: { required },
       sex: { required },
       birthDate: { required },

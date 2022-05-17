@@ -13,20 +13,27 @@
             <div class="row mt-4">
               <div class="col-md-12 col-sm-12 mb-4">
                 <!-- DaysOfStay Block Start -->
-                <MazInput
-                  v-model="createItineraryForm.daysOfStay"
-                  placeholder="Quantos dias de estadia"
-                  type="text"
-                  class="w-100"
-                  :class="{
-                        'is-invalid': isSubmitted && $v.createItineraryForm.daysOfStay.$error,
-                    }"
-                />
-                <div
-                    v-if="isSubmitted && !$v.createItineraryForm.daysOfStay.required"
-                    class="invalid-feedback!"
+                <div class="input-group">
+                  <MazInput
+                    type="number"
+                    class="w-100"
+                    placeholder="Quantos dias terá seu roteiro?"
+                    v-model="createItineraryForm.daysOfStay"
+                    :class="{
+                          'is-invalid': isSubmitted && $v.createItineraryForm.daysOfStay.$error,
+                      }"
+                  />
+                  <div
+                      v-if="isSubmitted && $v.createItineraryForm.daysOfStay.$error"
+                      class="invalid-feedback"
                   >
-                    <span>O campo dias de estadia é obrigatório!</span>
+                      <span v-if="!$v.createItineraryForm.daysOfStay.required">
+                        O campo dias de estadia é obrigatório!
+                      </span>
+                      <span v-else-if="!$v.createItineraryForm.daysOfStay.between">
+                        Quantidade de dias de estadia inválido. Insira um valor entre 1 e 7 dias.
+                      </span>
+                  </div>
                 </div>
                 <!-- DaysOfStay Block End -->
               </div>
@@ -45,34 +52,17 @@
                     }"
                   />
                   <div
-                    v-if="isSubmitted && !$v.createItineraryForm.arrivalDate.required"
+                    v-if="isSubmitted && $v.createItineraryForm.arrivalDate.$error"
                     class="invalid-feedback!"
                   >
-                    <span>O campo data de chegada é obrigatório!</span>
+                    <span v-if="!$v.createItineraryForm.arrivalDate.required">
+                      O campo data de chegada é obrigatório.
+                    </span>
+                    <span v-else-if="!$v.createItineraryForm.arrivalDate.minValue">
+                      A data de chegada não pode ser inferior ao dia de hoje.
+                    </span>
                   </div>
                 <!-- arrivalDate Block End -->
-              </div>
-              <div class="col-md-6 col-sm-12 mb-4">
-                <!-- arrivalTime Block Start -->
-                  <MazPicker
-                    v-model="createItineraryForm.arrivalTime"
-                    placeholder="Horário de Chegada"
-                    class="w-100"
-                    formatted="LT"
-                    @formatted="pickerFormatted2 = $event"
-                    no-date
-                    noNow
-                    :class="{
-                        'is-invalid': isSubmitted && $v.createItineraryForm.arrivalTime.$error,
-                    }"
-                  />
-                  <div
-                    v-if="isSubmitted && !$v.createItineraryForm.arrivalTime.required"
-                    class="invalid-feedback!"
-                  >
-                    <span>O campo horário de chegada é obrigatório!</span>
-                  </div>
-                <!-- arrivalTime Block End -->
               </div>
               <div class="col-md-6 col-sm-12 mb-4">
                 <!-- departureDate Block Start -->
@@ -96,150 +86,33 @@
                   </div>
                 <!-- departureDate Block End -->
               </div>
-              <div class="col-md-6 col-sm-12 mb-4">
-                <!-- departureTime Block Start -->
-                  <MazPicker
-                    v-model="createItineraryForm.departureTime"
-                    placeholder="Horário de Partida"
-                    class="w-100"
-                    formatted="LT"
-                    @formatted="pickerFormatted2 = $event"
-                    no-date
-                    noNow
-                    :class="{
-                        'is-invalid': isSubmitted && $v.createItineraryForm.departureTime.$error,
-                    }"
-                  />
-                  <div
-                    v-if="isSubmitted && !$v.createItineraryForm.departureTime.required"
-                    class="invalid-feedback!"
-                  >
-                    <span>O campo horário de partida é obrigatório!</span>
-                  </div>
-                <!-- departureTime Block End -->
-              </div>
             </div>
           </div>
-          <div class="form-group mb-3 pb-4 pt-4 border border-info p-4 bg-light">
-            <h4>Rotina de Viagem</h4>
+
+          <div class="form-group mb-3 pb-4 pt-4 border border-info p-4 bg-light text-center">
+            <h4 class="center">Escolha seu perfil de Viajante</h4>
+            <p>Seu roteiro será gerado a partir do perfil escolhido.<br>
+              Após o roteiro gerado, você poderá edita-lo conforme sua vontade.</p>
             <div class="row mt-4">
-              <div class="col-md-6 col-sm-12 mb-4">
-                <!-- startTimeActivities Block Start -->
-                  <MazPicker
-                    v-model="createItineraryForm.startTimeActivities"
-                    placeholder="Horário de Inicio das Atividades"
+              <div class="col-md-12 col-sm-12 mb-4">
+                <!-- Profile Block Start -->
+                  <MazSelect
+                    v-model="createItineraryForm.profile"
+                    placeholder="Perfil de viajante"
+                    type="text"
                     class="w-100"
-                    formatted="LT"
-                    @formatted="pickerFormatted2 = $event"
-                    no-date
-                    noNow
+                    :options="options"
                     :class="{
-                        'is-invalid':
-                          isSubmitted && $v.createItineraryForm.startTimeActivities.$error,
+                        'is-invalid': isSubmitted && $v.createItineraryForm.profile.$error,
                     }"
                   />
                   <div
-                    v-if="isSubmitted && !$v.createItineraryForm.startTimeActivities.required"
+                    v-if="isSubmitted && !$v.createItineraryForm.profile.required"
                     class="invalid-feedback!"
                   >
-                    <span>O campo horário de inicio das atividades é obrigatório!</span>
+                    <span>O campo perfil de viajante é obrigatório!</span>
                   </div>
-                <!-- startTimeActivities Block End -->
-              </div>
-              <div class="col-md-6 col-sm-12 mb-4">
-                <!-- endTimeActivities Block Start -->
-                  <MazPicker
-                    v-model="createItineraryForm.endTimeActivities"
-                    placeholder="Horário de Encerramento das Atividades"
-                    class="w-100"
-                    formatted="LT"
-                    @formatted="pickerFormatted2 = $event"
-                    no-date
-                    noNow
-                    :class="{
-                        'is-invalid':
-                          isSubmitted && $v.createItineraryForm.endTimeActivities.$error,
-                    }"
-                  />
-                  <div
-                    v-if="isSubmitted && !$v.createItineraryForm.endTimeActivities.required"
-                    class="invalid-feedback!"
-                  >
-                    <span>O campo horário de inicio das atividades é obrigatório!</span>
-                  </div>
-                <!-- startTimeActivities Block End -->
-              </div>
-            </div>
-          </div>
-          <div class="form-group mb-3 pb-4 pt-4 border border-info p-4 bg-light">
-            <h4>Seus Interesses na Viagem</h4>
-            <h5>Para definir os seus interesses na viagem escolha entre os valores 0 e 3</h5>
-            <p>0 - Nenhum /
-               1 - Pouco /
-               2 - Médio /
-               3 - Muito
-            </p>
-            <div class="row mt-4">
-              <div class="col-md-6 col-sm-12 mb-4">
-                <!-- museumInterest Block Start -->
-                  <p>Museus</p>
-                  <MazSlider
-                    v-model="createItineraryForm.museumInterest"
-                    type="number"
-                    class="w-100"
-                    max= 3
-                  />
-                <!-- museumInterest Block End -->
-              </div>
-              <div class="col-md-6 col-sm-12 mb-4">
-                <!-- beachInterest Block Start -->
-                  <p>Praias</p>
-                  <MazSlider
-                    v-model="createItineraryForm.beachInterest"
-                    class="w-100"
-                    max= 3
-                  />
-                <!-- beachInterest Block End -->
-              </div>
-              <div class="col-md-6 col-sm-12 mb-4">
-                <!-- adventureInterest Block Start -->
-                  <p>Aventuras</p>
-                  <MazSlider
-                    v-model="createItineraryForm.adventureInterest"
-                    class="w-100"
-                    max= 3
-                  />
-                <!-- adventureInterest Block End -->
-              </div>
-              <div class="col-md-6 col-sm-12 mb-4">
-                <!-- foodInterest Block Start -->
-                  <p>Restaurantes/Bares</p>
-                  <MazSlider
-                    v-model="createItineraryForm.foodInterest"
-                    class="w-100"
-                    max= 3
-                  />
-                <!-- foodInterest Block End -->
-              </div>
-              <div class="col-md-6 col-sm-12 mb-4">
-                <!-- purchaseInterest Block Start -->
-                  <p>Compras</p>
-                  <MazSlider
-                    v-model="createItineraryForm.purchaseInterest"
-                    class="w-100"
-                    max= 3
-                  />
-                <!-- purchaseInterest Block End -->
-              </div>
-              <div class="col-md-6 col-sm-12 mb-4">
-                <!-- touristAttractionsInterest Block Start -->
-                  <p>Atrações Turísticas</p>
-                  <MazSlider
-                    v-model="createItineraryForm.touristAttractionsInterest"
-                    class="w-100"
-                    max= 3
-                  />
-                <!-- touristAttractionsInterest Block End -->
+                <!-- Profile Block End -->
               </div>
             </div>
           </div>
@@ -262,3 +135,5 @@
 </template>
 
 <script src="./CreateItinerary.js"></script>
+
+<style src="./CreateItinerary.css" scoped></style>
